@@ -53,16 +53,18 @@ function orderMelons(evt) {
     };
 
     $.post("/order-melons.json", formInputs, function (results) {
-        console.log(results);
-    })
+        console.log(results)
+        let order_code = results['code']
+        let order_msg = results['msg']
+        console.log(order_msg)
+        console.log(order_code)
 
-    // TODO: show the result message after your form
-    // console.log(results)
-    // if (results['result_code'] === 'ERROR'){
-    //     $('#order-status').html(results).style.color = "red";
-    // } else {
-    // $('#order-status').html(results)};
-    // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
+        if (order_code === "ERROR"){
+            $("#order-status").html(order_msg).addClass("order-error")
+        } else {
+            $("#order-status").html(order_msg).removeClass("order-error")
+        }
+    })
 }
 
 $("#order-form").on('submit', orderMelons);
